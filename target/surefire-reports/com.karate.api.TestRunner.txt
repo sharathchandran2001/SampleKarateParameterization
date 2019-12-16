@@ -1,0 +1,16 @@
+-------------------------------------------------------------------------------
+Test set: com.karate.api.TestRunner
+-------------------------------------------------------------------------------
+Tests run: 2, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 5.464 sec <<< FAILURE!
+[1:8] Web([1-karate-driver-and-api] web and api)  Time elapsed: 0.219 sec  <<< ERROR!
+com.intuit.karate.exception.KarateException: -unknown-:5 - javascript evaluation failed: * call read('pom.json'), <eval>:1:0 Expected an operand but found *
+* call read('pom.json')
+^ in <eval> at line number 1 at column number 0
+	at ?.* def jsonE = * call read('pom.json') (-unknown-:5)
+
+[2:19] API([1-karate-driver-and-api] web and api)  Time elapsed: 0 sec  <<< ERROR!
+com.intuit.karate.exception.KarateException: -unknown-:5 - javascript evaluation failed: * call read('pom.json'), <eval>:1:0 Expected an operand but found *
+* call read('pom.json')
+^ in <eval> at line number 1 at column number 0
+	at ?.* def jsonE = * call read('pom.json') (-unknown-:5)
+

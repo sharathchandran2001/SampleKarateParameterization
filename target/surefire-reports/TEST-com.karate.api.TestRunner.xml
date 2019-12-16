@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite tests="2" failures="0" name="com.karate.api.TestRunner" time="0.219" errors="2" skipped="0">
+  <properties>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="java.vm.version" value="12.0.2+10"/>
+    <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-12.0.2\bin"/>
+    <property name="maven.multiModuleProjectDirectory" value="C:\Users\sharath.chandran\eclipse-workspace\spec1"/>
+    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="java.vendor.url" value="https://java.oracle.com/"/>
+    <property name="guice.disable.misplaced.annotation.check" value="true"/>
+    <property name="path.separator" value=";"/>
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
+    <property name="sun.os.patch.level" value="Service Pack 1"/>
+    <property name="user.script" value=""/>
+    <property name="user.country" value="US"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="user.dir" value="C:\Users\sharath.chandran\eclipse-workspace\spec1"/>
+    <property name="java.vm.compressedOopsMode" value="32-bit"/>
+    <property name="java.runtime.version" value="12.0.2+10"/>
+    <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.io.tmpdir" value="C:\Users\SHARAT~1.CHA\AppData\Local\Temp\"/>
+    <property name="line.separator" value="
+"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="user.variant" value=""/>
+    <property name="os.name" value="Windows 7"/>
+    <property name="classworlds.conf" value="C:\Users\sharath.chandran\eclipse-workspace\.metadata\.plugins\org.eclipse.m2e.launching\launches\m2conf479322608172997277.tmp"/>
+    <property name="sun.jnu.encoding" value="Cp1252"/>
+    <property name="java.library.path" value="C:\Program Files\Java\jdk-12.0.2\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:/Program Files/Java/jre1.8.0_211/bin/server;C:/Program Files/Java/jre1.8.0_211/bin;C:/Program Files/Java/jre1.8.0_211/lib/amd64;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\system32;C:\Windows;C:\Windows\Support\Scripts;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Windows\Support\Scripts;C:\Program Files\Java\jdk-12.0.2\bin;C:\Python34\Scripts;C:\Program Files\nodejs\;C:\Program Files\Git\cmd;C:\Program Files\Java\jdk-12.0.2\bin;C:\Users\sharath.chandran\AppData\Roaming\npm;C:\Users\sharath.chandran\Desktop;;."/>
+    <property name="jdk.debug" value="release"/>
+    <property name="java.class.version" value="56.0"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="os.version" value="6.1"/>
+    <property name="user.home" value="C:\Users\sharath.chandran"/>
+    <property name="user.timezone" value="America/New_York"/>
+    <property name="file.encoding" value="Cp1252"/>
+    <property name="java.specification.version" value="12"/>
+    <property name="user.name" value="sharath.chandran"/>
+    <property name="java.class.path" value="C:\Users\sharath.chandran\.p2\pool\plugins\org.eclipse.m2e.maven.runtime_1.11.0.20190220-2117\jars\plexus-classworlds-2.5.2.jar"/>
+    <property name="java.vm.specification.version" value="12"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher -B test"/>
+    <property name="java.home" value="C:\Program Files\Java\jdk-12.0.2"/>
+    <property name="user.language" value="en"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
+    <property name="java.vm.info" value="mixed mode, sharing"/>
+    <property name="java.version" value="12.0.2"/>
+    <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="maven.home" value="C:\Users\sharath.chandran\eclipse-workspace\spec1\EMBEDDED"/>
+    <property name="file.separator" value="\"/>
+    <property name="java.version.date" value="2019-07-16"/>
+    <property name="java.vendor.url.bug" value="https://bugreport.java.com/bugreport/"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="sun.desktop" value="windows"/>
+    <property name="sun.cpu.isalist" value="amd64"/>
+  </properties>
+  <testcase classname="[1-karate-driver-and-api] web and api" name="[1:8] Web" time="0.219">
+    <error message="-unknown-:5 - javascript evaluation failed: * call read(&apos;pom.json&apos;), &lt;eval&gt;:1:0 Expected an operand but found *
+* call read(&apos;pom.json&apos;)
+^ in &lt;eval&gt; at line number 1 at column number 0" type="com.intuit.karate.exception.KarateException">com.intuit.karate.exception.KarateException: -unknown-:5 - javascript evaluation failed: * call read(&apos;pom.json&apos;), &lt;eval&gt;:1:0 Expected an operand but found *
+* call read(&apos;pom.json&apos;)
+^ in &lt;eval&gt; at line number 1 at column number 0
+	at ✽.* def jsonE = * call read(&apos;pom.json&apos;) (-unknown-:5)
+</error>
+    <system-out>10:36:21.377 [main] WARN com.intuit.karate - skipping bootstrap configuration: could not find or read file: classpath:karate-config.js
+10:36:21.565 [main] DEBUG com.jayway.jsonpath.internal.path.CompiledPath - Evaluating path: $
+10:36:21.581 [main] DEBUG com.jayway.jsonpath.internal.path.CompiledPath - Evaluating path: $
+</system-out>
+    <system-err>Warning: Nashorn engine is planned to be removed from a future JDK release
+</system-err>
+  </testcase>
+  <testcase classname="[1-karate-driver-and-api] web and api" name="[2:19] API" time="0">
+    <error message="-unknown-:5 - javascript evaluation failed: * call read(&apos;pom.json&apos;), &lt;eval&gt;:1:0 Expected an operand but found *
+* call read(&apos;pom.json&apos;)
+^ in &lt;eval&gt; at line number 1 at column number 0" type="com.intuit.karate.exception.KarateException">com.intuit.karate.exception.KarateException: -unknown-:5 - javascript evaluation failed: * call read(&apos;pom.json&apos;), &lt;eval&gt;:1:0 Expected an operand but found *
+* call read(&apos;pom.json&apos;)
+^ in &lt;eval&gt; at line number 1 at column number 0
+	at ✽.* def jsonE = * call read(&apos;pom.json&apos;) (-unknown-:5)
+</error>
+    <system-out>10:36:21.659 [main] WARN com.intuit.karate - skipping bootstrap configuration: could not find or read file: classpath:karate-config.js
+10:36:21.659 [main] DEBUG com.jayway.jsonpath.internal.path.CompiledPath - Evaluating path: $
+10:36:21.659 [main] DEBUG com.jayway.jsonpath.internal.path.CompiledPath - Evaluating path: $
+</system-out>
+  </testcase>
+</testsuite>

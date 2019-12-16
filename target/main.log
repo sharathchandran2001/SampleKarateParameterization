@@ -1,0 +1,217 @@
+20:39:27.032 [print] Mainfile vFileChooserPathC:\Users\Public\Karate\Input\AllPassAPI.csv
+20:39:27.291 [print] vFileChooserPathC:\Users\Public\Karate\Input\AllPassAPI.csv
+20:39:27.362 [print] vResponseCode200
+20:39:27.388 [print] vResponseCodeValidation200
+20:39:27.927 request:
+1 > GET https://jsonplaceholder.typicode.com/todos/1
+1 > Accept: application/json
+1 > Accept-Encoding: gzip,deflate
+1 > Connection: Keep-Alive
+1 > Host: jsonplaceholder.typicode.com
+1 > User-Agent: Apache-HttpClient/4.5.5 (Java/12.0.2)
+
+20:39:34.018 response time in milliseconds: 6086.94
+1 < 200
+1 < Access-Control-Allow-Credentials: true
+1 < Age: 2508
+1 < CF-Cache-Status: HIT
+1 < CF-RAY: 545cd6d489baccee-EWR
+1 < Cache-Control: max-age=14400
+1 < Connection: keep-alive
+1 < Content-Type: application/json; charset=utf-8
+1 < Date: Mon, 16 Dec 2019 01:21:12 GMT
+1 < Etag: W/"53-hfEnumeNh6YirfjyjaujcOPPT+s"
+1 < Expect-CT: max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+1 < Expires: -1
+1 < Pragma: no-cache
+1 < Server: cloudflare
+1 < Set-Cookie: __cfduid=d93ed552952cfdd18edcba7e37c95192f1576459272; expires=Wed, 15-Jan-20 01:21:12 GMT; path=/; domain=.typicode.com; HttpOnly
+1 < Transfer-Encoding: chunked
+1 < Vary: Origin, Accept-Encoding
+1 < Via: 1.1 vegur
+1 < X-Content-Type-Options: nosniff
+1 < X-Powered-By: Express
+{
+  "userId": 1,
+  "id": 1,
+  "title": "delectus aut autem",
+  "completed": false
+}
+
+20:39:34.081 [print] vResponseCode200
+20:39:34.092 [print] vResponseCodeValidation200
+20:39:34.095 request:
+1 > GET https://jsonplaceholder.typicode.com/todos/2
+1 > Accept: application/json
+1 > Accept-Encoding: gzip,deflate
+1 > Connection: Keep-Alive
+1 > Host: jsonplaceholder.typicode.com
+1 > User-Agent: Apache-HttpClient/4.5.5 (Java/12.0.2)
+
+20:39:35.747 response time in milliseconds: 1642.80
+1 < 200
+1 < Access-Control-Allow-Credentials: true
+1 < CF-Cache-Status: REVALIDATED
+1 < CF-RAY: 545cd6de2842f009-EWR
+1 < Cache-Control: max-age=14400
+1 < Connection: keep-alive
+1 < Content-Type: application/json; charset=utf-8
+1 < Date: Mon, 16 Dec 2019 01:21:14 GMT
+1 < Etag: W/"63-+s0zIP5ZEQN9hypVJUneLybJ+L0"
+1 < Expect-CT: max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+1 < Expires: -1
+1 < Pragma: no-cache
+1 < Server: cloudflare
+1 < Set-Cookie: __cfduid=d534b0037ec754d041c9cc70ed0cec9151576459273; expires=Wed, 15-Jan-20 01:21:13 GMT; path=/; domain=.typicode.com; HttpOnly
+1 < Transfer-Encoding: chunked
+1 < Vary: Origin, Accept-Encoding
+1 < Via: 1.1 vegur
+1 < X-Content-Type-Options: nosniff
+1 < X-Powered-By: Express
+{
+  "userId": 1,
+  "id": 2,
+  "title": "quis ut nam facilis et officia qui",
+  "completed": false
+}
+
+20:39:35.787 [print] vResponseCode200
+20:39:35.797 [print] vResponseCodeValidation200
+20:39:35.800 request:
+1 > GET https://jsonplaceholder.typicode.com/todos/3
+1 > Accept: application/json
+1 > Accept-Encoding: gzip,deflate
+1 > Connection: Keep-Alive
+1 > Host: jsonplaceholder.typicode.com
+1 > User-Agent: Apache-HttpClient/4.5.5 (Java/12.0.2)
+
+20:39:37.816 response time in milliseconds: 2015.31
+1 < 200
+1 < Access-Control-Allow-Credentials: true
+1 < CF-Cache-Status: REVALIDATED
+1 < CF-RAY: 545cd6ea5a74c5f8-EWR
+1 < Cache-Control: max-age=14400
+1 < Connection: keep-alive
+1 < Content-Type: application/json; charset=utf-8
+1 < Date: Mon, 16 Dec 2019 01:21:16 GMT
+1 < Etag: W/"54-J3JtLgWuXjgj1OZdyAcKAqOaKHo"
+1 < Expect-CT: max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+1 < Expires: -1
+1 < Pragma: no-cache
+1 < Server: cloudflare
+1 < Set-Cookie: __cfduid=d6769b3bbd6d3a510a4dcf6132e8c8d861576459275; expires=Wed, 15-Jan-20 01:21:15 GMT; path=/; domain=.typicode.com; HttpOnly
+1 < Transfer-Encoding: chunked
+1 < Vary: Origin, Accept-Encoding
+1 < Via: 1.1 vegur
+1 < X-Content-Type-Options: nosniff
+1 < X-Powered-By: Express
+{
+  "userId": 1,
+  "id": 3,
+  "title": "fugiat veniam minus",
+  "completed": false
+}
+
+at veniam minus",
+  "completed": false
+}
+
+15-Jan-20 00:50:49 GMT; path=/; domain=.typicode.com; HttpOnly
+1 < Transfer-Encoding: chunked
+1 < Vary: Origin, Accept-Encoding
+1 < Via: 1.1 vegur
+1 < X-Content-Type-Options: nosniff
+1 < X-Powered-By: Express
+{
+  "userId": 1,
+  "id": 3,
+  "title": "fugiat veniam minus",
+  "completed": false
+}
+
+20:09:10.887 assertion failed: path: $, actual: 'fugiat veniam minus', expected: 'fugiat veniam minus WRONG INPUT', reason: not equal
+20:09:10.888 feature call failed: src/test/java/com/karate/api/1-karate-driver-and-api.feature
+arg: null
+[1.1:15] 1-karate-driver-and-api.feature:44 - path: $, actual: 'delectus aut autem', expected: 'delectus aut autemWRONG INPUT', reason: not equal
+[1.2:15] 1-karate-driver-and-api.feature:44 - path: $, actual: 'quis ut nam facilis et officia qui', expected: 'quis ut nam facilis et officia qui WRONG INPUT', reason: not equal
+[1.3:15] 1-karate-driver-and-api.feature:44 - path: $, actual: 'fugiat veniam minus', expected: 'fugiat veniam minus WRONG INPUT', reason: not equal
+ff
+1 < X-Powered-By: Express
+{
+  "userId": 1,
+  "id": 3,
+  "title": "fugiat veniam minus",
+  "completed": false
+}
+
+18:38:50.468 [print] responseJson{"id":3,"completed":false,"title":"fugiat veniam minus","userId":1}
+18:38:50.468 [print] response00000{"id":3,"completed":false,"title":"fugiat veniam minus","userId":1}
+18:38:50.468 [print] response11111{"id":3,"completed":false,"title":"fugiat veniam minus","userId":1}.completed
+18:38:50.468 [print] response22222completed
+18:38:50.468 [print] {
+  "key1": "sha"
+}
+
+18:38:50.483 [print] sha
+18:38:50.483 assertion failed: path: $, actual: 'false', expected: 'falsej', reason: not equal
+leted, actual: false, expected: 'false', reason: actual value is not a string
+st
+ertion failed: path: $, actual: {"id":3,"completed":false,"title":"fugiat veniam minus","userId":1}, expected: '1', reason: actual value is not a string
+eger)
+tring
+rqs(d,d.getAttribute("href"));var f=document.createElement("img");f.onerror=function(g){window.ezorqe(d,g.path[0].currentSrc)};f.src=d.getAttribute("href")}}})(document.querySelectorAll("link"));Element.prototype.addEventListener&&("function"==typeof window.onload&&(window.addEventListener("load",window.onload),
+		window.onload=null),"function"==typeof document.onload&&(document.addEventListener.addEventListener("load",document.onload),document.onload=null))})();</script>
+
+20:55:05.613 assertion failed: path: $, actual: '<vITransactionTypea>', expected: '<vITransactionTypeb>', reason: not equal
+20:55:05.644 [print] vResponseCode200
+20:55:05.644 [print] vResponse1i<vITransactionTypea>
+20:55:05.644 [print] vResponse1o<vITransactionTypeb>
+20:55:05.644 [print] vResponseCodeValidation200
+20:55:05.644 request:
+1 > GET http://dummy.restapiexample.com/api/v1/employee/169071
+1 > Accept: application/json
+1 > Accept-Encoding: gzip,deflate
+1 > Connection: Keep-Alive
+1 > Host: dummy.restapiexample.com
+1 > User-Agent: Apache-HttpClient/4.5.5 (Java/12.0.2)
+
+20:55:06.719 response time in milliseconds: 1058.54
+1 < 200
+1 < Accept-Ranges: bytes
+1 < Access-Control-Allow-Origin: *
+1 < Access-Control-Expose-Headers: Content-Type, X-Requested-With, X-authentication, X-client
+1 < Age: 0
+1 < Cache-Control: no-store, no-cache, must-revalidate
+1 < Content-Type: text/html; charset=UTF-8
+1 < Date: Sun, 15 Dec 2019 01:36:45 GMT
+1 < Display: pub_site_to_orig_sol
+1 < Expires: Thu, 19 Nov 1981 08:52:00 GMT
+1 < Pagespeed: off
+1 < Pragma: no-cache
+1 < Proxy-Connection: Keep-Alive
+1 < Referrer-Policy: 
+1 < Response: 200
+1 < Server: nginx/1.16.0
+1 < Set-Cookie: [PHPSESSID=23471c7347610052be2c89824019d3a6; path=/, ezoadgid_133674=-1; Path=/; Domain=restapiexample.com; Expires=Sun, 15 Dec 2019 02:06:44 UTC, ezoref_133674=; Path=/; Domain=restapiexample.com; Expires=Sun, 15 Dec 2019 03:36:44 UTC, ezoab_133674=mod36; Path=/; Domain=restapiexample.com; Expires=Sun, 15 Dec 2019 03:36:44 UTC, active_template::133674=pub_site.1576373804; Path=/; Domain=restapiexample.com; Expires=Tue, 17 Dec 2019 01:36:44 UTC, lp_133674=http://dummy.restapiexample.com/api/v1/employee/169071; Path=/; Domain=restapiexample.com; Expires=Sun, 15 Dec 2019 03:36:45 UTC, ezovuuidtime_133674=1576373805; Path=/; Domain=restapiexample.com; Expires=Tue, 17 Dec 2019 01:36:45 UTC, ezovuuid_133674=450a5905-9ee5-4abd-5362-4974a11c34c3; Path=/; Domain=restapiexample.com; Expires=Sun, 15 Dec 2019 02:06:45 UTC, ezopvc_133674=1; Path=/; Domain=restapiexample.com; Expires=Sun, 15 Dec 2019 02:06:45 UTC, ezCMPCCS=true; Path=/; Domain=restapiexample.com; Expires=Tue, 15 Dec 2020 01:36:45 GMT]
+1 < Transfer-Encoding: chunked
+1 < Vary: User-Agent,Accept-Encoding,X-APP-JSON
+1 < X-Ezoic-Cdn: Miss
+1 < X-Middleton-Display: pub_site_to_orig_sol
+1 < X-Middleton-Response: 200
+1 < X-Shard: 100229112
+1 < X-Sol: pub_site
+1 < X-Varnish: 962026302
+1 < X-Vcache: Miss
+false<script type='text/javascript' style='display:none;' async>
+__ez.queue.addFile('edmonton.php', '/detroitchicago/edmonton.webp?a=a&cb=3&shcb=32', true, [], true, false, false, false);
+__ez.queue.addFile('jellyfish.php', '/porpoiseant/jellyfish.webp?a=a&cb=3&shcb=32', false, [], true, false, false, false);
+</script>
+
+<script>var _audins_dom="restapiexample_com",_audins_did=133674;__ez.queue.addDelayFunc("audins.js","__ez.script.add", "//go.ezoic.net/detroitchicago/audins.js?cb=188-3");</script><noscript><div style="display:none;"><img src="//pixel.quantserve.com/pixel/p-31iz6hfFutd16.gif?labels=Domain.restapiexample_com,DomainId.133674" border="0" height="1" width="1" alt="Quantcast"/></div></noscript><noscript><img src="https://sb.scorecardresearch.com/p?c1=2&c2=20015427&cv=2.0&cj=1"/></noscript>
+<script type='text/javascript'>(function(){function b(e,c){for(var d=0;d<c.length;d++){var f=c[d];if(0==f.complete||"undefined"!=typeof f.readyState&&4>f.readyState){var g=f.getAttribute("src")||f.currentSrc;"undefined"!=typeof f.readyState&&0==f.readyState?f.addEventListener("loadstart",function(h){var k=h.getAttribute("src")||h.currentSrc;window.ezorqs(h,k)}):(g=f.getAttribute("src")||f.currentSrc,window.ezorqs(f,g));f.addEventListener("load",function(h){var k=h.currentTarget.getAttribute("src")||h.srcElement.currentSrc;window.ezorqe(h,
+		k)});f.addEventListener("loadeddata",function(h){var k=h.currentTarget.getAttribute("src")||h.srcElement.currentSrc;window.ezorqe(h,k)});f.addEventListener("error",function(h){var k=h.currentTarget.getAttribute("src")||h.srcElement.currentSrc;window.ezorqe(h,k)})}}}function a(e){for(var c=0;c<document.styleSheets.length;c++)if(document.styleSheets[c].href==e)return!0;return!1}b("img",document.querySelectorAll("img"));b("video",document.querySelectorAll("video"));b("audio",document.querySelectorAll("audio"));
+		(function(e){for(var c=0;c<e.length;c++){var d=e[c];if(("preload"==d.getAttribute("rel")||"stylesheet"==d.getAttribute("rel"))&&null!=d.getAttribute("href")&&a(d.getAttribute("href"))){window.ezorqs(d,d.getAttribute("href"));var f=document.createElement("img");f.onerror=function(g){window.ezorqe(d,g.path[0].currentSrc)};f.src=d.getAttribute("href")}}})(document.querySelectorAll("link"));Element.prototype.addEventListener&&("function"==typeof window.onload&&(window.addEventListener("load",window.onload),
+		window.onload=null),"function"==typeof document.onload&&(document.addEventListener.addEventListener("load",document.onload),document.onload=null))})();</script>
+
+20:55:06.724 assertion failed: path: $, actual: '<vITransactionTypea>', expected: '<vITransactionTypeb>', reason: not equal
+l
