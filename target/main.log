@@ -1,8 +1,8 @@
-20:39:27.032 [print] Mainfile vFileChooserPathC:\Users\Public\Karate\Input\AllPassAPI.csv
-20:39:27.291 [print] vFileChooserPathC:\Users\Public\Karate\Input\AllPassAPI.csv
-20:39:27.362 [print] vResponseCode200
-20:39:27.388 [print] vResponseCodeValidation200
-20:39:27.927 request:
+21:07:27.114 [print] Mainfile vFileChooserPathC:\Users\Public\Karate\Input\AllPassAPI.csv
+21:07:27.374 [print] vFileChooserPathC:\Users\Public\Karate\Input\AllPassAPI.csv
+21:07:27.434 [print] vResponseCode200
+21:07:27.456 [print] vResponseCodeValidation200
+21:07:27.987 request:
 1 > GET https://jsonplaceholder.typicode.com/todos/1
 1 > Accept: application/json
 1 > Accept-Encoding: gzip,deflate
@@ -10,22 +10,22 @@
 1 > Host: jsonplaceholder.typicode.com
 1 > User-Agent: Apache-HttpClient/4.5.5 (Java/12.0.2)
 
-20:39:34.018 response time in milliseconds: 6086.94
+21:07:33.697 response time in milliseconds: 5706.58
 1 < 200
 1 < Access-Control-Allow-Credentials: true
-1 < Age: 2508
+1 < Age: 4188
 1 < CF-Cache-Status: HIT
-1 < CF-RAY: 545cd6d489baccee-EWR
+1 < CF-RAY: 545cffd65eb8efe0-EWR
 1 < Cache-Control: max-age=14400
 1 < Connection: keep-alive
 1 < Content-Type: application/json; charset=utf-8
-1 < Date: Mon, 16 Dec 2019 01:21:12 GMT
+1 < Date: Mon, 16 Dec 2019 01:49:12 GMT
 1 < Etag: W/"53-hfEnumeNh6YirfjyjaujcOPPT+s"
 1 < Expect-CT: max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
 1 < Expires: -1
 1 < Pragma: no-cache
 1 < Server: cloudflare
-1 < Set-Cookie: __cfduid=d93ed552952cfdd18edcba7e37c95192f1576459272; expires=Wed, 15-Jan-20 01:21:12 GMT; path=/; domain=.typicode.com; HttpOnly
+1 < Set-Cookie: __cfduid=d09f87c7fc3bdb3bb261451e90de7573c1576460952; expires=Wed, 15-Jan-20 01:49:12 GMT; path=/; domain=.typicode.com; HttpOnly
 1 < Transfer-Encoding: chunked
 1 < Vary: Origin, Accept-Encoding
 1 < Via: 1.1 vegur
@@ -38,9 +38,9 @@
   "completed": false
 }
 
-20:39:34.081 [print] vResponseCode200
-20:39:34.092 [print] vResponseCodeValidation200
-20:39:34.095 request:
+21:07:33.746 [print] vResponseCode200
+21:07:33.762 [print] vResponseCodeValidation200
+21:07:33.765 request:
 1 > GET https://jsonplaceholder.typicode.com/todos/2
 1 > Accept: application/json
 1 > Accept-Encoding: gzip,deflate
@@ -48,21 +48,22 @@
 1 > Host: jsonplaceholder.typicode.com
 1 > User-Agent: Apache-HttpClient/4.5.5 (Java/12.0.2)
 
-20:39:35.747 response time in milliseconds: 1642.80
+21:07:35.310 response time in milliseconds: 1542.95
 1 < 200
 1 < Access-Control-Allow-Credentials: true
-1 < CF-Cache-Status: REVALIDATED
-1 < CF-RAY: 545cd6de2842f009-EWR
+1 < Age: 1679
+1 < CF-Cache-Status: HIT
+1 < CF-RAY: 545cffe0be08e724-EWR
 1 < Cache-Control: max-age=14400
 1 < Connection: keep-alive
 1 < Content-Type: application/json; charset=utf-8
-1 < Date: Mon, 16 Dec 2019 01:21:14 GMT
+1 < Date: Mon, 16 Dec 2019 01:49:13 GMT
 1 < Etag: W/"63-+s0zIP5ZEQN9hypVJUneLybJ+L0"
 1 < Expect-CT: max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
 1 < Expires: -1
 1 < Pragma: no-cache
 1 < Server: cloudflare
-1 < Set-Cookie: __cfduid=d534b0037ec754d041c9cc70ed0cec9151576459273; expires=Wed, 15-Jan-20 01:21:13 GMT; path=/; domain=.typicode.com; HttpOnly
+1 < Set-Cookie: __cfduid=dfe13ddb6edc826613d9d1b291638b0c61576460953; expires=Wed, 15-Jan-20 01:49:13 GMT; path=/; domain=.typicode.com; HttpOnly
 1 < Transfer-Encoding: chunked
 1 < Vary: Origin, Accept-Encoding
 1 < Via: 1.1 vegur
@@ -75,9 +76,9 @@
   "completed": false
 }
 
-20:39:35.787 [print] vResponseCode200
-20:39:35.797 [print] vResponseCodeValidation200
-20:39:35.800 request:
+21:07:35.350 [print] vResponseCode200
+21:07:35.363 [print] vResponseCodeValidation200
+21:07:35.365 request:
 1 > GET https://jsonplaceholder.typicode.com/todos/3
 1 > Accept: application/json
 1 > Accept-Encoding: gzip,deflate
@@ -85,21 +86,22 @@
 1 > Host: jsonplaceholder.typicode.com
 1 > User-Agent: Apache-HttpClient/4.5.5 (Java/12.0.2)
 
-20:39:37.816 response time in milliseconds: 2015.31
+21:07:36.870 response time in milliseconds: 1503.70
 1 < 200
 1 < Access-Control-Allow-Credentials: true
-1 < CF-Cache-Status: REVALIDATED
-1 < CF-RAY: 545cd6ea5a74c5f8-EWR
+1 < Age: 1679
+1 < CF-Cache-Status: HIT
+1 < CF-RAY: 545cffea7b732160-EWR
 1 < Cache-Control: max-age=14400
 1 < Connection: keep-alive
 1 < Content-Type: application/json; charset=utf-8
-1 < Date: Mon, 16 Dec 2019 01:21:16 GMT
+1 < Date: Mon, 16 Dec 2019 01:49:15 GMT
 1 < Etag: W/"54-J3JtLgWuXjgj1OZdyAcKAqOaKHo"
 1 < Expect-CT: max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
 1 < Expires: -1
 1 < Pragma: no-cache
 1 < Server: cloudflare
-1 < Set-Cookie: __cfduid=d6769b3bbd6d3a510a4dcf6132e8c8d861576459275; expires=Wed, 15-Jan-20 01:21:15 GMT; path=/; domain=.typicode.com; HttpOnly
+1 < Set-Cookie: __cfduid=dbcf0d9696899929f42c593b8d963ab191576460955; expires=Wed, 15-Jan-20 01:49:15 GMT; path=/; domain=.typicode.com; HttpOnly
 1 < Transfer-Encoding: chunked
 1 < Vary: Origin, Accept-Encoding
 1 < Via: 1.1 vegur
@@ -112,7 +114,7 @@
   "completed": false
 }
 
-at veniam minus",
+nus",
   "completed": false
 }
 

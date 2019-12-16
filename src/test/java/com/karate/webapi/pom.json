@@ -1,8 +1,0 @@
-{
-"page1":element1":"#edit-keyword",
-"ele2":"#edit-submit-solr-search"
-"testAccounts": {
-    "numTransactions": "input[name=numTransactions]",
-    "submit": "#submitButton"
-  },
-}
