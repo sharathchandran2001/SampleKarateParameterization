@@ -39,3 +39,63 @@ public class JavaUtil {
 
 
 }
+
+import org.springframework.core.io.buffer.DataBuffer;
+import org.springframework.core.io.buffer.DataBufferUtils;
+import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
+import reactor.core.publisher.Mono;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.nio.channels.FileChannel;
+import java.nio.file.Path;
+
+@Service
+public class GitDownloadService {
+
+    private final WebClient webClient;
+
+    public GitDownloadService() {
+        this.webClient = WebClient.builder()
+                .codecs(configurer -> configurer.defaultCodecs().maxInMemorySize(16 * 1024 * 1024)) // 16 MB buffer
+                .build();
+    }
+
+    public Mono<File> downloadZip(String repoUrl, File downloadDir, String token) {
+        return webClient.get()
+                .uri(repoUrl)
+                .header("Authorization", "token " + token) // Use "Bearer" for OAuth tokens if needed
+                .header("Accept", "application/vnd.github.v3+json")
+                .header("User-Agent", "Java-WebClient")
+                .retrieve()
+                .bodyToFlux(DataBuffer.class) // Stream the file content as DataBuffer
+                .reduce(DataBufferUtils.join()) // Combine the buffers into a single DataBuffer
+                .flatMap(dataBuffer -> saveToFile(dataBuffer, downloadDir))
+                .doOnError(WebClientResponseException.class, ex -> {
+                    throw new RuntimeException("Error downloading file: " + ex.getStatusCode() + " " + ex.getResponseBodyAsString());
+                })
+                .onErrorMap(ex -> new RuntimeException("Failed to download ZIP file", ex));
+    }
+
+    private Mono<File> saveToFile(DataBuffer dataBuffer, File downloadDir) {
+        try {
+            if (!downloadDir.exists() && !downloadDir.mkdirs()) {
+                throw new RuntimeException("Failed to create directory: " + downloadDir.getAbsolutePath());
+            }
+
+            File zipFile = new File(downloadDir, "repo.zip");
+
+            try (FileChannel channel = new FileOutputStream(zipFile).getChannel()) {
+                channel.write(dataBuffer.asByteBuffer());
+            } finally {
+                DataBufferUtils.release(dataBuffer); // Release the buffer
+            }
+
+            return Mono.just(zipFile);
+        } catch (Exception e) {
+            return Mono.error(new RuntimeException("Error saving ZIP file: " + e.getMessage(), e));
+        }
+    }
+}
