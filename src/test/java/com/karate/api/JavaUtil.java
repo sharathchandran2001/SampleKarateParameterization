@@ -99,3 +99,17 @@ public class GitDownloadService {
         }
     }
 }
+
+while ((line = reader.readLine()) != null) {
+                if (foundThreads) {
+                    // Capture the next two lines after "| threads:"
+                    extractedOutput.append(line).append(System.lineSeparator());
+                    if (--foundThreads == 0) break; // Stop after capturing 2 lines
+                }
+
+                if (line.contains("| threads:")) {
+                    foundThreads = 2; // Found the marker, start capturing next 2 lines
+                }
+            }
+
+            return extractedOutput.length() > 0 ? extractedOutput.toString() : "not found results";
