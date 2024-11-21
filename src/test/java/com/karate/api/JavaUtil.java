@@ -100,16 +100,73 @@ public class GitDownloadService {
     }
 }
 
-while ((line = reader.readLine()) != null) {
-                if (foundThreads) {
-                    // Capture the next two lines after "| threads:"
-                    extractedOutput.append(line).append(System.lineSeparator());
-                    if (--foundThreads == 0) break; // Stop after capturing 2 lines
-                }
 
-                if (line.contains("| threads:")) {
-                    foundThreads = 2; // Found the marker, start capturing next 2 lines
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
+public class NestedJsonConverter {
+    public static void main(String[] args) {
+        // Input string
+        String input = "feature:    2 | skipped:  0 | efficiency : 0.03 \n" +
+                       "scenarios:    4 | passed:  0 | failed : 0";
+
+        // Convert the string to structured JSON
+        String jsonOutput = convertToNestedJSON(input);
+        System.out.println("JSON Output:");
+        System.out.println(jsonOutput);
+    }
+
+    public static String convertToNestedJSON(String input) {
+        try {
+            // Create the main JSON object
+            ObjectMapper objectMapper = new ObjectMapper();
+            ObjectNode mainObject = objectMapper.createObjectNode();
+
+            // Split the input string into lines
+            String[] lines = input.split("\n");
+            for (String line : lines) {
+                if (line.startsWith("feature")) {
+                    // Create the "features" JSON object
+                    ObjectNode featuresNode = objectMapper.createObjectNode();
+                    addKeyValuePairs(featuresNode, line);
+                    mainObject.set("features", featuresNode);
+                } else if (line.startsWith("scenarios")) {
+                    // Create the "scenarios" JSON object
+                    ObjectNode scenariosNode = objectMapper.createObjectNode();
+                    addKeyValuePairs(scenariosNode, line);
+                    mainObject.set("scenarios", scenariosNode);
                 }
             }
 
-            return extractedOutput.length() > 0 ? extractedOutput.toString() : "not found results";
+            // Convert to JSON string
+            return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(mainObject);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "{}";
+        }
+    }
+
+    private static void addKeyValuePairs(ObjectNode node, String line) {
+        String[] parts = line.split("\\|");
+        for (String part : parts) {
+            String[] keyValue = part.split(":");
+            if (keyValue.length == 2) {
+                String key = keyValue[0].trim();
+                String value = keyValue[1].trim();
+
+                // Add key-value pairs (detect numbers or keep as strings)
+                try {
+                    if (value.contains(".")) {
+                        node.put(key, Double.parseDouble(value));
+                    } else {
+                        node.put(key, Integer.parseInt(value));
+                    }
+                } catch (NumberFormatException e) {
+                    node.put(key, value);
+                }
+            }
+        }
+    }
+}
+
+
