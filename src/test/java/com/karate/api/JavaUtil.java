@@ -171,3 +171,110 @@ public class NestedJsonConverter {
 
 
 
+
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+public class LogParser {
+    public static Map<String, Map<String, String>> parseLogFile(String filePath) throws IOException {
+        try (Stream<String> lines = Files.lines(Path.of(filePath))) {
+            // Read all lines and collect into a list
+            List<String> allLines = lines
+                    .map(String::trim) // Trim leading and trailing spaces
+                    .filter(line -> !line.isEmpty()) // Exclude empty lines
+                    .collect(Collectors.toList());
+
+            // Process lines and group into submissions
+            Map<String, Map<String, String>> submissions = new LinkedHashMap<>();
+            Map<String, String> currentSubmission = null;
+            String currentKey = null;
+
+            for (String line : allLines) {
+                if (line.endsWith("submission completed")) {
+                    // New submission block starts
+                    currentKey = line;
+                    currentSubmission = new LinkedHashMap<>();
+                    submissions.put(currentKey, currentSubmission);
+                } else if (currentSubmission != null) {
+                    String[] parts = line.split(":", 2); // Split into key-value pairs
+                    if (parts.length == 2) {
+                        currentSubmission.put(parts[0].trim(), parts[1].trim());
+                    } else {
+                        currentSubmission.put("Result", line); // Handle the "Result Received" line
+                    }
+                }
+            }
+            return submissions;
+        }
+    }
+
+    public static void main(String[] args) throws IOException {
+        String filePath = "output.log";
+        Map<String, Map<String, String>> data = parseLogFile(filePath);
+
+        // Print parsed data
+        data.forEach((key, value) -> {
+            System.out.println(key + " -> " + value);
+        });
+    }
+}
+
+
+import io.cucumber.datatable.DataTable;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+
+import java.util.List;
+import java.util.Map;
+
+import static org.junit.Assert.assertEquals;
+
+public class LogValidationSteps {
+    private Map<String, Map<String, String>> parsedLogData;
+
+    @Given("I parse the log file {string}")
+    public void parseLogFile(String filePath) throws Exception {
+        parsedLogData = LogParser.parseLogFile(filePath);
+    }
+
+    @Then("the log data should match the following")
+    public void validateLogData(DataTable dataTable) {
+        List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
+
+        for (Map<String, String> row : rows) {
+            String testType = row.get("test_type");
+            String workflowIdExists = row.get("Workflow_id_exits");
+            String submissionIdExists = row.get("submission_id_exists");
+            String durationExists = row.get("Duration_exists");
+            String outputStatus = row.get("output status");
+
+            // Get the parsed data for this test type
+            Map<String, String> logEntry = parsedLogData.get(testType);
+
+            if ("Yes".equalsIgnoreCase(workflowIdExists)) {
+                assertEquals("Workflow ID exists validation failed for " + testType,
+                        true, logEntry.containsKey("Workflow ID"));
+            }
+            if ("Yes".equalsIgnoreCase(submissionIdExists)) {
+                assertEquals("Submission ID exists validation failed for " + testType,
+                        true, logEntry.containsKey("Submission ID"));
+            }
+            if ("Yes".equalsIgnoreCase(durationExists)) {
+                assertEquals("Duration exists validation failed for " + testType,
+                        true, logEntry.containsKey("Duration"));
+            }
+            assertEquals("Output status validation failed for " + testType,
+                    outputStatus, logEntry.get("Result"));
+        }
+    }
+}
+
+
+
+
+
