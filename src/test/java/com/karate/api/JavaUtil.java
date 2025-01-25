@@ -310,5 +310,29 @@ public String executeGradleCommand(String command) {
 }
 
 
+//=====
+
+
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+                String line;
+                boolean captureLines = false; // Flag to start capturing lines
+                int linesCaptured = 0;       // Counter for lines captured
+
+                while ((line = reader.readLine()) != null) {
+                    // Check for "| threads:" and start capturing the next 2 lines
+                    if (line.contains("| threads:")) {
+                        captureLines = true; // Enable capturing
+                        outputBuilder.append(line).append(System.lineSeparator()); // Include the "| threads:" line
+                    } else if (captureLines && linesCaptured < 2) {
+                        outputBuilder.append(line).append(System.lineSeparator());
+                        linesCaptured++;
+                        // Stop capturing after 2 lines
+                        if (linesCaptured == 2) {
+                            captureLines = false;
+                        }
+                    }
+                }
+            }
+
 
 
