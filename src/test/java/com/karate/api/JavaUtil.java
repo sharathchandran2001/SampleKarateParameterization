@@ -274,3 +274,37 @@ public class LogValidationSteps {
     }
 }
 
+
+
+public Mono<String> executeGradleCommand(String command) {
+    return Mono.create(sink -> {
+        try {
+            // Initialize the Gradle process
+            ProcessBuilder processBuilder = new ProcessBuilder(command.split(" "));
+            processBuilder.redirectErrorStream(true); // Combine stdout and stderr
+            Process process = processBuilder.start();
+
+            // Capture process output
+            StringBuilder outputBuilder = new StringBuilder();
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    outputBuilder.append(line).append(System.lineSeparator());
+                }
+            }
+
+            // Wait for process to complete
+            int exitCode = process.waitFor();
+
+            // Return output or error based on the exit code
+            if (exitCode == 0) {
+                sink.success(outputBuilder.toString().trim()); // Emit output as a Mono
+            } else {
+                sink.error(new RuntimeException("Gradle process failed with exit code: " + exitCode));
+            }
+        } catch (Exception e) {
+            sink.error(new RuntimeException("Failed to execute Gradle command", e)); // Emit exception
+        }
+    });
+}
+
