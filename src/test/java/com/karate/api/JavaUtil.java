@@ -393,3 +393,58 @@ public String executeGradleCommand(String command) {
 }
 
 
+//////
+public String executeGradleCommand(String command) {
+    return Flux.create(sink -> {
+        try {
+            // Start the Gradle process
+            ProcessBuilder processBuilder = new ProcessBuilder(command.split(" "));
+            processBuilder.redirectErrorStream(true); // Combine stdout and stderr
+            Process process = processBuilder.start();
+
+            // Read process output reactively
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+                String line;
+                boolean captureLines = false; // Flag to start capturing lines
+                int linesCaptured = 0;       // Counter for lines captured
+
+                while ((line = reader.readLine()) != null) {
+                    // Check for "| threads:" and start capturing the next 2 lines
+                    if (line.contains("| threads:")) {
+                        captureLines = true; // Enable capturing
+                        linesCaptured = 0;   // Reset line counter for new block
+                        continue;            // Skip the "| threads:" line itself
+                    }
+
+                    // Capture the next two lines after "| threads:"
+                    if (captureLines && linesCaptured < 2) {
+                        sink.next(line);     // Emit the line to the Flux
+                        linesCaptured++;
+                        if (linesCaptured == 2) {
+                            captureLines = false; // Stop capturing after 2 lines
+                        }
+                    }
+                }
+            }
+
+            // Wait for the process to complete
+            int exitCode = process.waitFor();
+
+            // Complete the sink or emit an error
+            if (exitCode == 0) {
+                sink.complete(); // Indicate the Flux is complete
+            } else {
+                sink.error(new RuntimeException("Gradle process failed with exit code: " + exitCode));
+            }
+        } catch (Exception e) {
+            sink.error(e); // Handle exceptions
+        }
+    })
+    // Collect and join the relevant lines
+    .collectList() // Collect all emitted lines into a List
+    .map(lines -> String.join(System.lineSeparator(), lines)) // Join lines into a single String
+    .block(); // Block to return the final string
+}
+
+
+
