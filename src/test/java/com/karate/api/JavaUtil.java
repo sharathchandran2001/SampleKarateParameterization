@@ -493,4 +493,48 @@ public String executeGradleCommand(String command) {
     .map(lines -> String.join(System.lineSeparator(), lines)) // Join lines into a single String
     .block(); // Block to return the final string
 
+// list string to json
+
+private String convert2JSONString(List<String> lines) {
+    // Regex patterns for features and scenarios
+    Pattern featuresPattern = Pattern.compile("features:\\s+(\\d+)\\s+\\|\\s+skipped:\\s+(\\d+)\\s+\\|\\s+efficiency\\s+:\\s+([\\d.]+)");
+    Pattern scenariosPattern = Pattern.compile("scenarios:\\s+(\\d+)\\s+\\|\\s+passed:\\s+(\\d+)\\s+\\|\\s+failed\\s+:\\s+(\\d+)");
+
+    // Initialize the JSON map
+    Map<String, Map<String, Object>> jsonMap = lines.stream()
+        .flatMap(line -> {
+            // Create a stream of optional key-value pairs for matched patterns
+            Matcher featuresMatcher = featuresPattern.matcher(line);
+            Matcher scenariosMatcher = scenariosPattern.matcher(line);
+
+            Map<String, Map<String, Object>> result = new HashMap<>();
+
+            if (featuresMatcher.find()) {
+                Map<String, Object> featuresData = new HashMap<>();
+                featuresData.put("count", Integer.parseInt(featuresMatcher.group(1)));
+                featuresData.put("skipped", Integer.parseInt(featuresMatcher.group(2)));
+                featuresData.put("efficiency", Double.parseDouble(featuresMatcher.group(3)));
+                result.put("features", featuresData);
+            }
+
+            if (scenariosMatcher.find()) {
+                Map<String, Object> scenariosData = new HashMap<>();
+                scenariosData.put("count", Integer.parseInt(scenariosMatcher.group(1)));
+                scenariosData.put("passed", Integer.parseInt(scenariosMatcher.group(2)));
+                scenariosData.put("failed", Integer.parseInt(scenariosMatcher.group(3)));
+                result.put("scenarios", scenariosData);
+            }
+
+            return result.entrySet().stream();
+        })
+        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+
+    // Convert the map to a JSON string
+    try {
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(jsonMap);
+    } catch (Exception e) {
+        throw new RuntimeException("Error converting to JSON", e);
+    }
+}
 
