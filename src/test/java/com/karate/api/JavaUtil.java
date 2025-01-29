@@ -538,3 +538,32 @@ private String convert2JSONString(List<String> lines) {
     }
 }
 
+
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+
+public class MapLookup {
+    private final Map<String, String> dataMap;
+
+    public MapLookup() {
+        this.dataMap = new HashMap<>(); // Efficient, no duplicate keys
+        this.dataMap.put("key1", "value1");
+        this.dataMap.put("key2", "value2");
+        this.dataMap.put("key3", "value3");
+    }
+
+    public Optional<String> getValue(String key) {
+        return dataMap.entrySet().stream()
+                .filter(entry -> entry.getKey().equals(key))
+                .map(Map.Entry::getValue)
+                .findFirst(); // Returns an Optional to handle missing keys
+    }
+
+    public static void main(String[] args) {
+        MapLookup lookup = new MapLookup();
+        System.out.println(lookup.getValue("key2").orElse("Key not found"));
+    }
+}
+
