@@ -567,3 +567,11 @@ public class MapLookup {
     }
 }
 
+
+
+curl -X POST \
+     http://my-selenium-service.namespace1.svc.cluster.local:4444/your-endpoint \
+     -H "Content-Type: application/json" \
+     -H "Connection: close" \
+     -d '{"repo": "repo1", "project": "project1"}'
+
