@@ -688,3 +688,66 @@ public class GradleTestRunner {
 }
 
 
+
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+import java.io.IOException;
+
+public class HtmlTableParser {
+
+    public static void main(String[] args) throws IOException {
+        // **REPLACE THIS WITH YOUR ACTUAL HTML SOURCE**
+        String html = """
+                <table>
+                ... (Your HTML table content here) ...
+                </table>"""; //  Make sure to put your real HTML here.
+
+        Document doc = Jsoup.parse(html);
+
+        Element table = doc.selectFirst("table");
+
+        if (table != null) {
+            int totalPassedScenarios = 0;
+            int totalFailedScenarios = 0;
+
+
+            // Select all rows *except* the header row (if there is one)
+            Elements rows = table.select("tr:not(:first-child)"); // :not(:first-child) excludes the first row
+
+            for (Element row : rows) {
+                Elements cells = row.select("td");
+
+                // Assuming the order: Passed, Failed, Skipped, Pending, Undefined, Total, Passed (Scenarios), Failed (Scenarios), Total (Scenarios), Duration, Status
+                if (cells.size() >= 9) { // Ensure at least 9 cells to avoid IndexOutOfBoundsException
+                    try {
+                        int passedScenarios = Integer.parseInt(cells.get(6).text().trim()); // Index 6 is "Passed" Scenarios
+                        int failedScenarios = Integer.parseInt(cells.get(7).text().trim()); // Index 7 is "Failed" Scenarios
+
+                        totalPassedScenarios += passedScenarios;
+                        totalFailedScenarios += failedScenarios;
+
+                    } catch (NumberFormatException e) {
+                        System.err.println("Error parsing scenario counts in a row: " + row.text());
+                         // Handle the error appropriately, e.g., set to 0 or skip the row
+                    }
+                } else {
+                    System.err.println("Row has fewer than 9 cells: " + row.text());
+                }
+            }
+
+            int totalScenarios = totalPassedScenarios + totalFailedScenarios;
+
+            System.out.println("Total Passed Scenarios: " + totalPassedScenarios);
+            System.out.println("Total Failed Scenarios: " + totalFailedScenarios);
+            System.out.println("Total Scenarios: " + totalScenarios);
+
+        } else {
+            System.out.println("Table not found.");
+        }
+    }
+}
+
