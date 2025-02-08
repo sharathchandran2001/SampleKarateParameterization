@@ -575,3 +575,95 @@ curl -X POST \
      -H "Connection: close" \
      -d '{"repo": "repo1", "project": "project1"}'
 
+
+
+
+
+
+
+	import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.*;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+
+public class GradleTestRunner {
+
+    /**
+     * Runs a Gradle test command, waits for its completion, then checks for and parses a Cucumber HTML report.
+     *
+     * @param gradleCommand The Gradle command to run (e.g., "./gradlew clean test")
+     * @param reportDirPath The path to the folder where the cucumber reports are generated (e.g., "cucumber reports")
+     * @return The extracted information from the report as a String, or an error message if something goes wrong.
+     */
+    public String runGradleTestAndParseReport(String gradleCommand, String reportDirPath) {
+        try {
+            // Start the Gradle test process
+            ProcessBuilder processBuilder = new ProcessBuilder(gradleCommand.split(" "));
+            processBuilder.redirectErrorStream(true); // Merge stderr with stdout
+            Process process = processBuilder.start();
+
+            // Optionally, you can log the Gradle output while waiting:
+            try (BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(process.getInputStream()))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    System.out.println(line);
+                }
+            }
+
+            // Wait for the Gradle process to complete
+            int exitCode = process.waitFor();
+            if (exitCode != 0) {
+                throw new RuntimeException("Gradle test failed with exit code: " + exitCode);
+            }
+
+            // Optionally, wait until the "cucumber reports" folder appears (with a timeout)
+            Path reportDir = Paths.get(reportDirPath);
+            int attempts = 0;
+            while (!Files.exists(reportDir) && attempts < 10) {
+                Thread.sleep(2000); // Wait for 2 seconds before checking again
+                attempts++;
+            }
+            if (!Files.exists(reportDir)) {
+                throw new RuntimeException("Cucumber reports folder not found after waiting");
+            }
+
+            // Assume the report file is named "report.html" inside the report folder
+            Path reportFile = reportDir.resolve("report.html");
+            if (!Files.exists(reportFile)) {
+                throw new RuntimeException("Cucumber HTML report file not found in " + reportDirPath);
+            }
+
+            // Read the content of the HTML report file
+            String reportHtml = new String(Files.readAllBytes(reportFile), StandardCharsets.UTF_8);
+
+            // Optionally parse the HTML using jsoup
+            Document doc = Jsoup.parse(reportHtml);
+            // For example, extract the title of the report:
+            String reportTitle = doc.title();
+            System.out.println("Report Title: " + reportTitle);
+
+            // Return the full report content or a summary as desired
+            return reportHtml; // or return reportTitle, or build a custom JSON response
+
+        } catch (Exception e) {
+            // Log the error and return a JSON error message (or rethrow)
+            e.printStackTrace();
+            return "{\"error\": \"Something went wrong while executing Gradle tests and parsing reports.\"}";
+        }
+    }
+
+    // For testing purposes
+    public static void main(String[] args) {
+        GradleTestRunner runner = new GradleTestRunner();
+        // Adjust these values as needed
+        String gradleCommand = "./gradlew clean test";
+        String reportDirPath = "cucumber reports";
+
+        String result = runner.runGradleTestAndParseReport(gradleCommand, reportDirPath);
+        System.out.println("Result:\n" + result);
+    }
+}
+
