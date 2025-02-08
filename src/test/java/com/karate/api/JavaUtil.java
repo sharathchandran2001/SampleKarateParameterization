@@ -579,32 +579,40 @@ curl -X POST \
 
 
 
-
-
 	import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 public class GradleTestRunner {
 
     /**
-     * Runs a Gradle test command, waits for its completion, then checks for and parses a Cucumber HTML report.
+     * Runs the Gradle test task, waits for its completion, then parses the Karate report file
+     * "overview-features.html" found in "target/cucumber-html-reports" to extract scenario counts,
+     * passed, and failed values. Returns a JSON string with these values.
+     *
+     * Expected report text format (example):
+     *   "Scenarios: 10 Passed: 8 Failed: 2"
      *
      * @param gradleCommand The Gradle command to run (e.g., "./gradlew clean test")
-     * @param reportDirPath The path to the folder where the cucumber reports are generated (e.g., "cucumber reports")
-     * @return The extracted information from the report as a String, or an error message if something goes wrong.
+     * @return A JSON string like {"scenarios":10, "passed":8, "failed":2} or an error JSON.
      */
-    public String runGradleTestAndParseReport(String gradleCommand, String reportDirPath) {
+    public String runGradleTestAndParseKarateReport(String gradleCommand) {
         try {
-            // Start the Gradle test process
+            // Start the Gradle process
             ProcessBuilder processBuilder = new ProcessBuilder(gradleCommand.split(" "));
-            processBuilder.redirectErrorStream(true); // Merge stderr with stdout
+            processBuilder.redirectErrorStream(true); // Merge stdout and stderr
             Process process = processBuilder.start();
 
-            // Optionally, you can log the Gradle output while waiting:
+            // Optionally, log the Gradle output to the console
             try (BufferedReader reader = new BufferedReader(
                     new InputStreamReader(process.getInputStream()))) {
                 String line;
@@ -619,51 +627,64 @@ public class GradleTestRunner {
                 throw new RuntimeException("Gradle test failed with exit code: " + exitCode);
             }
 
-            // Optionally, wait until the "cucumber reports" folder appears (with a timeout)
-            Path reportDir = Paths.get(reportDirPath);
+            // Wait for the report directory to be created, with a timeout
+            Path reportDir = Paths.get("target/cucumber-html-reports");
             int attempts = 0;
             while (!Files.exists(reportDir) && attempts < 10) {
-                Thread.sleep(2000); // Wait for 2 seconds before checking again
+                Thread.sleep(2000); // Wait 2 seconds between attempts
                 attempts++;
             }
             if (!Files.exists(reportDir)) {
-                throw new RuntimeException("Cucumber reports folder not found after waiting");
+                throw new RuntimeException("Report directory not found after waiting");
             }
 
-            // Assume the report file is named "report.html" inside the report folder
-            Path reportFile = reportDir.resolve("report.html");
+            // Define the expected report file
+            Path reportFile = reportDir.resolve("overview-features.html");
             if (!Files.exists(reportFile)) {
-                throw new RuntimeException("Cucumber HTML report file not found in " + reportDirPath);
+                throw new RuntimeException("Report file 'overview-features.html' not found in " + reportDir.toString());
             }
 
-            // Read the content of the HTML report file
+            // Read the HTML content of the report file
             String reportHtml = new String(Files.readAllBytes(reportFile), StandardCharsets.UTF_8);
 
-            // Optionally parse the HTML using jsoup
+            // Parse the HTML using jsoup
             Document doc = Jsoup.parse(reportHtml);
-            // For example, extract the title of the report:
-            String reportTitle = doc.title();
-            System.out.println("Report Title: " + reportTitle);
+            // Extract the full text of the document; adjust if you can narrow it down further.
+            String text = doc.text();
 
-            // Return the full report content or a summary as desired
-            return reportHtml; // or return reportTitle, or build a custom JSON response
+            // Use regex to extract scenario count, passed, and failed values.
+            // This regex expects text like: "Scenarios: 10 Passed: 8 Failed: 2"
+            Pattern pattern = Pattern.compile("Scenarios:\\s*(\\d+).*Passed:\\s*(\\d+).*Failed:\\s*(\\d+)", Pattern.DOTALL);
+            Matcher matcher = pattern.matcher(text);
+            if (!matcher.find()) {
+                throw new RuntimeException("Could not parse scenario, passed, and failed counts from the report.");
+            }
+            int scenarios = Integer.parseInt(matcher.group(1));
+            int passed = Integer.parseInt(matcher.group(2));
+            int failed = Integer.parseInt(matcher.group(3));
+
+            // Build the JSON response using a map
+            Map<String, Object> resultMap = new HashMap<>();
+            resultMap.put("scenarios", scenarios);
+            resultMap.put("passed", passed);
+            resultMap.put("failed", failed);
+
+            // Convert the map to a JSON string using Jackson ObjectMapper
+            ObjectMapper mapper = new ObjectMapper();
+            return mapper.writeValueAsString(resultMap);
 
         } catch (Exception e) {
-            // Log the error and return a JSON error message (or rethrow)
             e.printStackTrace();
-            return "{\"error\": \"Something went wrong while executing Gradle tests and parsing reports.\"}";
+            return "{\"error\": \"An error occurred while processing the Karate report.\"}";
         }
     }
 
-    // For testing purposes
     public static void main(String[] args) {
         GradleTestRunner runner = new GradleTestRunner();
-        // Adjust these values as needed
-        String gradleCommand = "./gradlew clean test";
-        String reportDirPath = "cucumber reports";
-
-        String result = runner.runGradleTestAndParseReport(gradleCommand, reportDirPath);
-        System.out.println("Result:\n" + result);
+        String gradleCommand = "./gradlew clean test";  // Adjust the command as needed
+        String resultJson = runner.runGradleTestAndParseKarateReport(gradleCommand);
+        System.out.println("Result JSON: " + resultJson);
     }
 }
+
 
