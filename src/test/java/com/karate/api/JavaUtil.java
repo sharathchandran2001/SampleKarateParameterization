@@ -751,3 +751,64 @@ public class HtmlTableParser {
     }
 }
 
+
+//≈======== process async wait 
+
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.time.Duration;
+import java.util.List;
+
+public String executeGradleCommand(String command) {
+    try {
+        // Start the process
+        ProcessBuilder processBuilder = new ProcessBuilder(command.split(" "));
+        processBuilder.redirectErrorStream(true); // Merge stderr with stdout
+        Process process = processBuilder.start();
+
+        // Create a Flux to read the process output line by line
+        Flux<String> outputFlux = Flux.create(sink -> {
+            try (BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(process.getInputStream()))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    sink.next(line);
+                }
+                sink.complete();
+            } catch (Exception ex) {
+                sink.error(ex);
+            }
+        });
+
+        // Create a Mono that waits for the process to complete.
+        // You can set a timeout here if needed.
+        Mono<Integer> exitCodeMono = Mono.fromCallable(() -> process.waitFor())
+                                         .timeout(Duration.ofSeconds(300)); // adjust timeout as needed
+
+        // Combine waiting for process completion and reading the output.
+        // If the exit code is not 0, signal an error.
+        String result = exitCodeMono.flatMap(exitCode -> {
+            if (exitCode != 0) {
+                // If the process failed, propagate an error with your desired message
+                return Mono.error(new RuntimeException("{\"error\": \"Gradle process failed with exit code: " + exitCode + "\"}"));
+            }
+            // Otherwise, collect the output lines into a single String
+            return outputFlux.collectList()
+                             .map(lines -> String.join(System.lineSeparator(), lines));
+        }).onErrorResume(e -> {
+            // Optionally, catch errors here and return your predefined JSON error message
+            return Mono.just("{\"error\": \"Something went wrong during process execution: " + e.getMessage() + "\"}");
+        }).block();  // Block to get the final result
+
+        return result;
+    } catch (Exception e) {
+        e.printStackTrace();
+        return "{\"error\": \"An unexpected error occurred.\"}";
+    }
+}
+
+
+
