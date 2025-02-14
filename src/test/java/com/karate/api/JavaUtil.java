@@ -813,17 +813,17 @@ public String executeGradleCommand(String command) {
 Solution Summary
 
 
- 1. QTD's BIAN aligned Test Data Generation & Storage 
- 2. QTD's BIAN Aligned APIs - Available for Consumers/QE MNEs
- 3. QTD's Python & ML Connectors Detecting right APIs for MNE needs. Customized OCP hosted Python FastAPI project (Transformation & corrector logic)
- 4. QEL & ZLN (QFaaS) and ParaSoft Customization to send the Gherkin steps. Response is BIAN aligned test data for business use cases
+ 1. BIAN aligned Test Data Generation & Storage 
+ 2. BIAN Aligned APIs - Available for Consumers/QE MNEs
+ 3. Python & ML Connectors Detecting right APIs for MNE needs. Customized OCP hosted Python FastAPI project (Transformation & corrector logic)
+ 4. Customization to send the Gherkin steps. Response is BIAN aligned test data for business use cases
 
 
 
 Benefits
 
-1. QTD's DB and APIs are in BIAN alignment.
-2. QFaaS and ParaSoft Test data reflects BIAN standards making QE's speak in same language for Test Data
+1.  are in BIAN alignment.
+2.  Test data reflects BIAN standards making QE's speak in same language for Test Data
 3. Accelerates QE test project development, Execution, Quality improvement etc.
 4. Streamlines QE project handovers, knowledge transfer, swift adoption 
 5. Process document references for Developers (API and Database standards aligned to BIAN) &  QE's (Test Data Standards aligned to BIAN)
