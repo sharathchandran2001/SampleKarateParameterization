@@ -872,57 +872,53 @@ public class SeleniumGridTest {
 
 
 
+import org.apache.hc.client5.http.config.ConnectionConfig;
 import org.apache.hc.client5.http.config.RequestConfig;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
+import org.apache.hc.core5.net.URIBuilder;
 import org.apache.hc.core5.util.Timeout;
 import org.openqa.selenium.remote.HttpCommandExecutor;
-import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.http.ClientConfig;
+import org.openqa.selenium.remote.http.HttpClient;
+import org.openqa.selenium.remote.http.netty.NettyClient;
+import org.openqa.selenium.remote.CommandInfo;
+
+import java.net.InetSocketAddress;
+import java.net.Proxy;
 import java.net.URL;
+import java.util.Map;
 
-public class SeleniumGridWithTimeout {
-    public static void main(String[] args) {
+public class SeleniumExecutorFactory {
+
+    public static HttpCommandExecutor createExecutor(Map<String, CommandInfo> commands, URL gridUrl, 
+                                                     ClientConfig clientConfig, String proxyHost, int proxyPort) {
         try {
-            // Define Selenium Grid URL
-            URL gridUrl = new URL("http://your-selenium-grid-hub:4444/wd/hub");
-
-            // Set timeout values (equivalent to 3 hours read timeout)
-            RequestConfig config = RequestConfig.custom()
+            // Configure timeouts (matching OkHttpClient settings)
+            RequestConfig requestConfig = RequestConfig.custom()
                     .setConnectionRequestTimeout(Timeout.ofMinutes(2))  // Connect Timeout: 2 min
                     .setResponseTimeout(Timeout.ofHours(3))  // Read Timeout: 3 hours
                     .build();
 
-            // Create custom HttpClient with timeout settings
+            // Configure proxy settings
+            Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(proxyHost, proxyPort));
+
+            // Create HTTP client with proxy and timeouts
             CloseableHttpClient httpClient = HttpClients.custom()
-                    .setDefaultRequestConfig(config)
+                    .setDefaultRequestConfig(requestConfig)
+                    .setProxy(new org.apache.hc.core5.net.NamedEndpoint(proxyHost, proxyPort))
                     .build();
 
-            // Use HttpCommandExecutor with custom HttpClient
-            HttpCommandExecutor executor = new HttpCommandExecutor(gridUrl) {
-                @Override
-                protected CloseableHttpClient getHttpClient() {
-                    return httpClient;
-                }
-            };
+            // Create HttpClient Factory with NettyClient and proxy support
+            HttpClient.Factory clientFactory = NettyClient.create(clientConfig);
 
-            // Set ChromeOptions
-            ChromeOptions options = new ChromeOptions();
-            options.addArguments("--ignore-certificate-errors");
-
-            // Initialize RemoteWebDriver with executor
-            RemoteWebDriver driver = new RemoteWebDriver(executor, options);
-
-            // Navigate to a webpage
-            driver.get("https://www.example.com");
-            System.out.println("Page title: " + driver.getTitle());
-
-            // Close browser
-            driver.quit();
+            // Return the HttpCommandExecutor configured with proxy
+            return new HttpCommandExecutor(commands, gridUrl, clientFactory);
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException("Failed to create HttpCommandExecutor with proxy", e);
         }
     }
 }
+
 
 
