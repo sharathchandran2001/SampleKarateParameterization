@@ -814,3 +814,59 @@ public String executeGradleCommand(String command) {
 
 
 
+
+import org.openqa.selenium.Proxy;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.HttpCommandExecutor;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+public class SeleniumGridTest {
+    public static void main(String[] args) {
+        try {
+            // Selenium Grid Hub URL
+            String gridUrl = "http://your-selenium-grid-hub:4444/wd/hub";  // Replace with actual Grid URL
+
+            // Define Corporate Proxy
+            String proxyHost = "your.corporate.proxy.com";  // Replace with actual proxy
+            String proxyPort = "8080";                      // Replace with actual port
+
+            Proxy proxy = new Proxy();
+            proxy.setHttpProxy(proxyHost + ":" + proxyPort);
+            proxy.setSslProxy(proxyHost + ":" + proxyPort);
+
+            // Set ChromeOptions
+            ChromeOptions chromeOptions = new ChromeOptions();
+            chromeOptions.setProxy(proxy);
+            chromeOptions.addArguments("--ignore-certificate-errors");
+            chromeOptions.addArguments("--headless"); // Optional, for running in headless mode
+
+            // Define Capabilities
+            DesiredCapabilities capabilities = new DesiredCapabilities();
+            capabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
+
+            // Use HttpCommandExecutor for custom HTTP execution
+            HttpCommandExecutor executor = new HttpCommandExecutor(new URL(gridUrl));
+
+            // Initialize Remote WebDriver
+            WebDriver driver = new RemoteWebDriver(executor, capabilities);
+
+            // Navigate to a website
+            driver.get("https://www.example.com");
+
+            // Print Page Title
+            System.out.println("Page Title: " + driver.getTitle());
+
+            // Close the browser
+            driver.quit();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+
+
