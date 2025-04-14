@@ -869,56 +869,35 @@ public class SeleniumGridTest {
 }
 
 
+import java.io.File;
 
 
+    // Static method to delete a ZIP file and report success/failure
+    public static boolean deleteZipFile(String zipFilePath) {
+        File zipFile = new File(zipFilePath);
 
-import org.apache.hc.client5.http.config.ConnectionConfig;
-import org.apache.hc.client5.http.config.RequestConfig;
-import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
-import org.apache.hc.client5.http.impl.classic.HttpClients;
-import org.apache.hc.core5.net.URIBuilder;
-import org.apache.hc.core5.util.Timeout;
-import org.openqa.selenium.remote.HttpCommandExecutor;
-import org.openqa.selenium.remote.http.ClientConfig;
-import org.openqa.selenium.remote.http.HttpClient;
-import org.openqa.selenium.remote.http.netty.NettyClient;
-import org.openqa.selenium.remote.CommandInfo;
-
-import java.net.InetSocketAddress;
-import java.net.Proxy;
-import java.net.URL;
-import java.util.Map;
-
-public class SeleniumExecutorFactory {
-
-    public static HttpCommandExecutor createExecutor(Map<String, CommandInfo> commands, URL gridUrl, 
-                                                     ClientConfig clientConfig, String proxyHost, int proxyPort) {
         try {
-            // Configure timeouts (matching OkHttpClient settings)
-            RequestConfig requestConfig = RequestConfig.custom()
-                    .setConnectionRequestTimeout(Timeout.ofMinutes(2))  // Connect Timeout: 2 min
-                    .setResponseTimeout(Timeout.ofHours(3))  // Read Timeout: 3 hours
-                    .build();
-
-            // Configure proxy settings
-            Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(proxyHost, proxyPort));
-
-            // Create HTTP client with proxy and timeouts
-            CloseableHttpClient httpClient = HttpClients.custom()
-                    .setDefaultRequestConfig(requestConfig)
-                    .setProxy(new org.apache.hc.core5.net.NamedEndpoint(proxyHost, proxyPort))
-                    .build();
-
-            // Create HttpClient Factory with NettyClient and proxy support
-            HttpClient.Factory clientFactory = NettyClient.create(clientConfig);
-
-            // Return the HttpCommandExecutor configured with proxy
-            return new HttpCommandExecutor(commands, gridUrl, clientFactory);
+            if (zipFile.exists()) {
+                if (zipFile.delete()) {
+                    System.out.println("ZIP file deleted successfully: " + zipFilePath);
+                    return true;
+                } else {
+                    System.out.println("Failed to delete ZIP file: " + zipFilePath);
+                    return false;
+                }
+            } else {
+                System.out.println("ZIP file does not exist: " + zipFilePath);
+                return false;
+            }
+        } catch (SecurityException se) {
+            System.out.println("Security error while deleting ZIP file: " + se.getMessage());
+            se.printStackTrace();
+            return false;
         } catch (Exception e) {
-            throw new RuntimeException("Failed to create HttpCommandExecutor with proxy", e);
+            System.out.println("Error deleting ZIP file: " + e.getMessage());
+            e.printStackTrace();
+            return false;
         }
     }
 }
-
-
 
