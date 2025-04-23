@@ -508,6 +508,12 @@ AI-driven chatbots that interact with APIs based on user intent.
 
 Internal developer tools that auto-resolve and test API contracts.
 
+
+Summary Sentence for Architecture Docs
+The Smart Middleware Gateway is an extension of the QD platform (also referred to as QT Middleware) that semantically translates natural language test steps from consumers (like QF, PS) into actionable API calls on the synthetic data provider (QD). It serves as an intelligent broker that bridges human-readable inputs with real-time provider APIs using fuzzy logic, tracing, and rate-limiting mechanisms.
+
+
+
 Bridging human requirements with machine actions in workflows.
 
 Data engineers or QA writing Gherkin-style steps to auto-run APIs.
