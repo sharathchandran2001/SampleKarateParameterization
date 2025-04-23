@@ -412,7 +412,104 @@ public WebClient webClient(ClientRegistrationRepository clients,
 
 
 
+-------
 
 
- 
+Consumer = Human (or agent) writing Gherkin steps
+Provider = API services/endpoints that fulfill the matched Gherkin step
+
+
+How Your System Acts as an API Gateway:
+Gateway Role	Your FastAPI App Behavior
+Request Parsing	Accepts Gherkin step input (natural language-style input) from a client.
+Routing Logic	Uses fuzzy matching to resolve and route the request to the best-matched API endpoint.
+Fallback Logic	Returns best-effort matches if confidence is low.
+
+Rate Limiting	Prevents abuse or overload using IP-based throttling.
+Logging & Tracing	Adds observability for traffic flow and error tracking.
+Retry Logic	Resilient to transient upstream errors using backoff logic (if added with tenacity).
+Consumer ↔ Provider	Mediates Gherkin-to-API resolution – like translating consumer intent to provider action.
+
+
+ Optional Labeling Terms You Can Use:
+"Intelligent Gherkin-to-API Gateway"
+
+"Natural Language Gateway for API Consumers"
+
+"Semantic API Router using Gherkin Step Inputs"
+
+"NLP-Driven Gateway for Provider APIs"
+
+You Can Extend This Gateway To:
+Multi-service backend calls (orchestration of provider APIs).
+
+Add auth/authz per route.
+
+Forward enriched requests to microservices.
+
+Support OpenAPI-driven fallback suggestions.
+
+Maintain a mapping registry in DB or Redis.
+
+Smart Gherkin-to-API Gateway
+This project implements a Smart API Gateway that allows users to write natural-language-like Gherkin steps and translates them into actual API calls using fuzzy matching. It bridges the gap between non-technical consumers and technical API providers, acting as a semantic routing gateway.
+
+Key Features
+Fuzzy Matching with RapidFuzz
+Matches user-written Gherkin-style steps with the closest available API endpoint based on confidence score.
+
+Semantic API Routing
+Resolves matched step to an actual API endpoint and fetches real-time data from it.
+
+Key Features
+Fuzzy Matching with RapidFuzz
+Matches user-written Gherkin-style steps with the closest available API endpoint based on confidence score.
+
+Semantic API Routing
+Resolves matched step to an actual API endpoint and fetches real-time data from it.
+
+Async & Sync Endpoints
+Provides both traditional and asynchronous endpoints for optimal performance and compatibility.
+
+Queue Support (Optional)
+Easily pluggable with background job queues (e.g., Celery, Redis) for handling high-throughput or slow APIs.
+
+Rate Limiting & Throttling
+Protects endpoints from abuse by limiting request frequency per user/IP.
+
+Retry & Backoff Logic
+Resilient retry strategy with exponential backoff to handle transient errors from upstream services.
+
+Logging & Distributed Tracing
+Built-in logging and trace ID propagation for better observability and monitoring.
+
+
+                 +--------------------+
+                 |  Gherkin Step User |
+                 +---------+----------+
+                           |
+                           | Natural Language Step (e.g. "get credit card details")
+                           v
+                 +---------+----------+
+                 |  Smart API Gateway |
+                 |  (FastAPI App)     |
+                 +---------+----------+
+                           |
+               Fuzzy Match + Semantic Routing
+                           |
+                           v
+        +------------------+-------------------+
+        |     Matched Provider API (Upstream)  |
+        +--------------------------------------+
+
+
+Use Cases
+AI-driven chatbots that interact with APIs based on user intent.
+
+Internal developer tools that auto-resolve and test API contracts.
+
+Bridging human requirements with machine actions in workflows.
+
+Data engineers or QA writing Gherkin-style steps to auto-run APIs.
+
 
