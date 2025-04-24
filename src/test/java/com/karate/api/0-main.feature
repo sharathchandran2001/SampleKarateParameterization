@@ -89,3 +89,6 @@ Share upcoming features, collect feedback — makes them feel invested and heard
 
 Product Owner Message
 We’re building Middleware to be customer-centric from day one. By combining early discovery (survey + interview + matrix), a modular mapping engine, and sandbox tryouts, we ensure that it not only meets core use cases but adapts quickly to future needs across multiple verticals.
+
+
+A sandbox tryout is a safe, isolated environment where customers (or internal teams) can test your Middleware API without affecting real systems or requiring production access.
