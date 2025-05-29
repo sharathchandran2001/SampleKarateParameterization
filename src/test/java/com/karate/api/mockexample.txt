@@ -1,5 +1,13 @@
 # Karate mock examples
 
+src/test/java/
+├── features/
+│   ├── post-api-test.feature      # Your test feature
+│   ├── mock-api.feature           # Your mock server
+│   ├── payloads/
+│   │   └── valid-user-payload.js  # Reusable request body
+
+
 Feature: POST API test against Karate Mock Server
 
 Background:
