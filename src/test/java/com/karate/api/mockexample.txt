@@ -1,0 +1,99 @@
+# Karate mock examples
+
+Feature: POST API test against Karate Mock Server
+
+Background:
+  * url 'http://localhost:8080/api/users'
+  * def validPayload = call read('classpath:features/payloads/valid-user-payload.js')
+  * def missingNamePayload = { user: { email: 'missing@example.com' } }
+  * def trigger502Payload = { user: { name: 'trigger502' } }
+  * configure timeout = 70000
+
+Scenario: Successful POST returns 200
+  Given request validPayload
+  When method post
+  Then status 200
+  And match response.user.name == 'John Doe'
+  And match response.user.id == '#number'
+  And match response.status == 'created'
+
+Scenario: Missing name returns 400
+  Given request missingNamePayload
+  When method post
+  Then status 400
+  And match response.error == 'Missing name field'
+
+
+Scenario: Simulate and validate 502 from mock
+  Given request trigger502Payload
+  When method post
+  Then status 502
+  And match response.error == 'Mocked 502: Upstream server unavailable'
+
+
+
+
+import com.intuit.karate.http.MockServer;
+
+public class MockServerRunner {
+    public static void main(String[] args) {
+        MockServer server = MockServer.start("classpath:features/mock-api.feature", 8080);
+        System.out.println("Mock server running on port: " + server.getPort());
+    }
+}
+
+
+
+
+Feature: Mock API for /api/users
+
+Scenario: POST /api/users
+
+  * def body = request.body
+
+  # Return 502 if name == 'trigger502'
+  * if (body.user && body.user.name == 'trigger502') karate.abort({
+      status: 502,
+      body: { error: 'Mocked 502: Upstream server unavailable' }
+    })
+
+  # Return 400 if name is missing
+  * if (!body.user || !body.user.name) karate.abort({
+      status: 400,
+      body: { error: 'Missing name field' }
+    })
+
+  # Optional: simulate 1 minute delay
+  * karate.sleep(60000)
+
+  # Success case: return 200
+  * def response =
+    """
+    {
+      "user": {
+        "id": 123,
+        "name": "#(body.user.name)",
+        "email": "#(body.user.email)"
+      },
+      "status": "created"
+    }
+    """
+  * status 200
+
+
+
+
+
+function fn() {
+  return {
+    user: {
+      name: "John Doe",
+      email: "john.doe@example.com"
+    },
+    metadata: {
+      source: "web",
+      timestamp: "2025-05-29T12:00:00Z"
+    }
+  };
+}
+
