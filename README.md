@@ -37,6 +37,8 @@ for entity in entities:
 
 strict matching
 
+And json SequenceServer = karate.jsonPath(response.hits, '$.hits[?(@._source.text == "Successful openshift CLI validation")]')
+
 # Option 1: Using multiple conditions in JSONPath
 And json SequenceServer = karate.jsonPath(response.hits, '$.hits[?(@._source.text contains "Successful openshift CLI validation" && !(@._source.text contains "Failed openshift validation"))]')
 
